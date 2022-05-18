@@ -45,6 +45,11 @@ const uploadFile = (filePath, fileData, type = DEFAULT_TYPE) => {
       spawnSync('unzip', [uploadFilePath, '-d', uploadFilePath.replace(/\.[^/.]+$/, '')]);
       spawnSync('rm', [uploadFilePath]);
     }
+
+    if (path.extname(uploadFilePath) === '.gltf') {
+      spawnSync('mkdir', ['-p', uploadFilePath.replace(/\.[^/.]+$/, '')]);
+      spawnSync('mv', [uploadFilePath, path.join(uploadFilePath.replace(/\.[^/.]+$/, ''), 'scene.gltf')]);
+    }
     return uploadFilePath;
   });
 };
